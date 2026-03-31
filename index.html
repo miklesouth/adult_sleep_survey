@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adult Sleep &amp; Arousal Questionnaire | Emory Autism Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Atkinson Hyperlegible', 'Segoe UI', sans-serif; background: linear-gradient(135deg, #F5F8FB 0%, #e8eef4 100%); min-height: 100vh; color: #1a2332; }
+  
+  .container { max-width: 680px; margin: 0 auto; padding: 20px 16px 60px; }
+  
+  .header { text-align: center; margin-bottom: 24px; padding: 20px 0; }
+  .header .org { font-size: 13px; font-weight: 700; color: #2B547E; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .header h1 { font-size: 26px; font-weight: 700; color: #1a2332; margin: 0 0 8px; line-height: 1.2; }
+  .header .desc { font-size: 14px; color: #6B7280; line-height: 1.5; max-width: 520px; margin: 0 auto; }
+  .privacy-badge { margin-top: 12px; padding: 8px 14px; background: #e8f5e9; border-radius: 8px; font-size: 12px; color: #2e7d32; display: inline-block; }
+  
+  .progress-wrap { margin-bottom: 20px; }
+  .progress-labels { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .progress-labels .section-name { font-size: 12px; font-weight: 600; color: #2B547E; }
+  .progress-labels .count { font-size: 12px; color: #6B7280; }
+  .progress-bar { height: 6px; background: #dfe4ea; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: #2B547E; border-radius: 3px; transition: width 0.4s ease; }
+  
+  .instruction { padding: 12px 16px; background: rgba(43,84,126,0.04); border-left: 3px solid #2B547E; border-radius: 0 8px 8px 0; margin-bottom: 16px; font-size: 14px; color: #4a5568; font-style: italic; line-height: 1.5; }
+  
+  .card { background: #fff; border: 1px solid #D1D9E0; border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: border-color 0.2s, box-shadow 0.2s; }
+  .card:focus-within { border-color: #2B547E; box-shadow: 0 0 0 2px rgba(43,84,126,0.13); }
+  
+  .q-label { margin-bottom: 10px; line-height: 1.5; }
+  .q-label .num { font-weight: 700; color: #2B547E; margin-right: 6px; }
+  .q-label .text { font-weight: 600; color: #1a2332; font-size: 15px; }
+  
+  .text-input { width: 100%; padding: 10px 14px; border: 1px solid #D1D9E0; border-radius: 8px; font-size: 15px; font-family: 'Atkinson Hyperlegible', sans-serif; background: #F5F8FB; outline: none; transition: border-color 0.2s; }
+  .text-input:focus { border-color: #2B547E; }
+  textarea.text-input { resize: vertical; min-height: 70px; }
+  
+  .placeholder-text { font-size: 13px; color: #6B7280; margin-bottom: 8px; font-style: italic; }
+  
+  .radio-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .radio-btn { padding: 8px 16px; border-radius: 20px; border: 2px solid #D1D9E0; background: #fff; color: #374151; font-weight: 400; font-size: 14px; cursor: pointer; font-family: 'Atkinson Hyperlegible', sans-serif; transition: all 0.15s; }
+  .radio-btn:hover { border-color: #2B547E; }
+  .radio-btn.selected { border-color: #2B547E; background: #2B547E; color: #fff; font-weight: 600; }
+  
+  .check-list { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+  .check-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 8px; cursor: pointer; border: 1px solid transparent; transition: all 0.15s; }
+  .check-item:hover { background: rgba(43,84,126,0.04); }
+  .check-item.checked { background: rgba(43,84,126,0.05); border-color: #2B547E; }
+  .check-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: #2B547E; cursor: pointer; flex-shrink: 0; }
+  .check-item span { font-size: 14px; color: #374151; line-height: 1.4; }
+  .other-wrap { display: flex; align-items: center; gap: 10px; padding: 8px 12px; }
+  .other-wrap span { font-size: 14px; color: #6B7280; }
+  .other-wrap input { flex: 1; padding: 6px 10px; border: 1px solid #D1D9E0; border-radius: 6px; font-size: 14px; font-family: 'Atkinson Hyperlegible', sans-serif; background: #F5F8FB; }
+  
+  .rating-wrap { display: flex; align-items: center; justify-content: center; gap: 0; margin-top: 8px; }
+  .rating-label { font-size: 12px; color: #6B7280; min-width: 80px; }
+  .rating-label.left { text-align: right; margin-right: 12px; }
+  .rating-label.right { text-align: left; margin-left: 12px; }
+  .rating-btn { width: 44px; height: 44px; border-radius: 50%; border: 2px solid #D1D9E0; background: #fff; color: #374151; font-weight: 700; font-size: 16px; cursor: pointer; margin: 0 4px; font-family: 'Atkinson Hyperlegible', sans-serif; transition: all 0.15s; }
+  .rating-btn:hover { border-color: #2B547E; }
+  .rating-btn.selected { border-color: #2B547E; background: #2B547E; color: #fff; }
+  
+  .grid-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .grid-table th { text-align: center; padding: 8px 10px; font-size: 13px; font-weight: 700; color: #2B547E; background: #F5F8FB; border-radius: 6px; }
+  .grid-table th:first-child { text-align: left; color: #6B7280; font-weight: 400; }
+  .grid-table td { padding: 6px 8px; border-bottom: 1px solid #D1D9E0; }
+  .grid-table td:first-child { padding: 8px 10px; font-size: 14px; font-weight: 500; color: #374151; }
+  .grid-table td input { width: 100%; max-width: 140px; padding: 8px 10px; border: 1px solid #D1D9E0; border-radius: 6px; font-size: 14px; text-align: center; font-family: 'Atkinson Hyperlegible', sans-serif; background: #F5F8FB; }
+  .grid-table td input:focus { border-color: #2B547E; outline: none; }
+  
+  .nav { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; gap: 12px; }
+  .nav-btn { padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 15px; cursor: pointer; font-family: 'Atkinson Hyperlegible', sans-serif; transition: all 0.15s; }
+  .nav-btn.back { border: 2px solid #D1D9E0; background: #fff; color: #374151; }
+  .nav-btn.back:disabled { opacity: 0.5; cursor: default; }
+  .nav-btn.next { border: none; background: #2B547E; color: #fff; font-weight: 700; box-shadow: 0 2px 8px rgba(43,84,126,0.3); }
+  .nav-btn.next:hover { background: #1e3f5e; }
+  .nav-btn.generate { border: none; background: #059669; color: #fff; font-weight: 700; box-shadow: 0 2px 8px rgba(5,150,105,0.3); }
+  .nav-btn.generate:hover { background: #047857; }
+  .nav-btn.generate:disabled { background: #94a3b8; cursor: wait; }
+  .nav .count { font-size: 12px; color: #6B7280; }
+  
+  .final-note { margin-top: 20px; padding: 14px 18px; background: #fffbeb; border-radius: 8px; border: 1px solid #fbbf24; font-size: 13px; color: #92400e; line-height: 1.5; text-align: center; }
+  
+  @media (max-width: 500px) {
+    .header h1 { font-size: 22px; }
+    .card { padding: 14px 16px; }
+    .radio-wrap { gap: 6px; }
+    .radio-btn { padding: 7px 12px; font-size: 13px; }
+    .rating-btn { width: 38px; height: 38px; font-size: 14px; margin: 0 3px; }
+    .rating-label { font-size: 11px; min-width: 60px; }
+    .nav-btn { padding: 10px 18px; font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+
+<script type="text/babel">
+const { useState, useRef } = React;
+
+const sections = [
+  {
+    id: "info", title: "Your Information", instruction: null,
+    questions: [
+      { id: "name", num: "", type: "text", label: "Name" },
+      { id: "date", num: "", type: "text", label: "Date" },
+      { id: "age", num: "", type: "text", label: "Age" },
+      { id: "gender", num: "", type: "text", label: "Gender" },
+    ],
+  },
+  {
+    id: "schedule", title: "Section 1: Your Sleep Schedule",
+    instruction: "Give your best estimate for a typical week.",
+    questions: [
+      { id: "q1", num: "1", type: "grid", label: "What time do you usually\u2026", cols: ["Weeknights", "Weekends"], rows: ["Go to bed?", "Fall asleep?", "Wake up?"] },
+      { id: "q2", num: "2", type: "text", label: "How many hours of sleep do you get on a typical night?" },
+      { id: "q3", num: "3", type: "radio", label: "Do you use an alarm to wake up?", options: ["Yes, every day", "Sometimes", "No"] },
+      { id: "q4", num: "4", type: "radio", label: "Is your sleep schedule consistent across the week?", options: ["Yes", "Mostly", "It varies a lot"] },
+      { id: "q5", num: "5", type: "radio", label: "Do you nap during the day?", options: ["No", "Yes, on purpose", "Yes, I fall asleep without meaning to"] },
+    ],
+  },
+  {
+    id: "environment", title: "Section 2: Bedtime & Sleep Environment", instruction: null,
+    questions: [
+      { id: "q6", num: "6", type: "textarea", label: "Briefly describe your bedtime routine.", placeholder: "Example: watch TV, brush teeth, read, lights off" },
+      { id: "q7", num: "7", type: "radio", label: "Do you use screens (phone, tablet, TV) in bed before sleep?", options: ["Every night", "Most nights", "Sometimes", "Rarely", "Never"] },
+      { id: "q8", num: "8", type: "check", label: "What is in your sleep environment? (Check all that apply.)", options: ["Sound machine or white noise", "Fan", "Earplugs", "Eye mask or blackout curtains", "Weighted blanket", "TV on in the background", "Nightlight", "Specific pillows or bedding I need"], hasOther: true },
+      { id: "q9", num: "9", type: "check", label: "Are any of these sensory issues a problem for your sleep? (Check all that apply.)", options: ["Sounds I can\u2019t filter out", "Light in the room", "Room temperature (too hot or too cold)", "Texture of sheets, pajamas, or blankets", "Partner\u2019s movement or breathing", "A pet in the bed", "None of these are a problem"], hasOther: true },
+    ],
+  },
+  {
+    id: "falling_asleep", title: "Section 3: What Happens When You Can\u2019t Fall Asleep",
+    instruction: "These questions help us understand what is driving your sleep difficulty. Please think about a typical bad night.",
+    questions: [
+      { id: "q10", num: "10", type: "text", label: "Once lights are off, how many minutes does it usually take to fall asleep?" },
+      { id: "q11", num: "11", type: "check", label: "When you can\u2019t fall asleep, what do you notice in your MIND? (Check all that apply.)", options: ["Racing thoughts I can\u2019t stop", "Replaying events from the day", "Worrying about tomorrow or the future", "Mentally planning, organizing, or problem-solving", "Thinking about not being able to sleep", "Calculating what time it is and how much sleep I can get", "Mind feels blank but I\u2019m not sleepy"], hasOther: true },
+      { id: "q12", num: "12", type: "check", label: "When you can\u2019t fall asleep, what do you notice in your BODY? (Check all that apply.)", options: ["Heart beating fast or feels strong", "Body feels tense or restless", "Feel hot, sweaty, or temperature discomfort", "Legs feel restless or need to move", "Feel physically \u201Cwired\u201D or \u201Con alert\u201D", "Body is exhausted but brain won\u2019t shut off", "Notice sensory things more (sounds, heartbeat, textures)", "Body feels calm and comfortable, just not sleepy"], hasOther: false },
+      { id: "q13", num: "13", type: "rating", label: "How much are you troubled by racing or unwanted thoughts at bedtime?", low: "Not at all", high: "Extremely" },
+      { id: "q14", num: "14", type: "rating", label: "How much physical tension or restlessness do you feel at bedtime?", low: "Not at all", high: "Extremely" },
+      { id: "q15", num: "15", type: "rating", label: "How much do you worry about whether you will be able to fall asleep?", low: "Not at all", high: "Extremely" },
+      { id: "q16", num: "16", type: "check", label: "What do you do when you can\u2019t fall asleep? (Check all that apply.)", options: ["Lie still and try to force sleep", "Breathing exercises or relaxation", "Check my phone", "Get up and do something else", "Eat or drink something", "Just wait"], hasOther: false },
+    ],
+  },
+  {
+    id: "night_wakings", title: "Section 4: Waking During the Night", instruction: null,
+    questions: [
+      { id: "q17", num: "17", type: "text", label: "How many times do you typically wake during the night?" },
+      { id: "q18", num: "18", type: "check", label: "When do the wakings usually happen?", options: ["Within 1\u20132 hours of falling asleep", "Middle of the night", "Early morning (can\u2019t get back to sleep)", "Spread throughout the night", "No consistent pattern"], hasOther: false },
+      { id: "q19", num: "19", type: "check", label: "Can you identify why you wake up? (Check all that apply.)", options: ["Need to use the bathroom", "A noise or disturbance", "Pain or physical discomfort", "A dream or nightmare", "Too hot or too cold", "My mind just \u201Cswitches on\u201D", "No apparent reason"], hasOther: true },
+      { id: "q20", num: "20", type: "check", label: "When you wake and can\u2019t get back to sleep, what happens? (Check all that apply.)", options: ["My mind immediately starts thinking or worrying", "I feel wide awake, like a switch flipped", "I feel physically agitated or restless", "I feel frustrated or angry about being awake", "I reach for my phone", "I feel calm but not sleepy"], hasOther: false },
+      { id: "q21", num: "21", type: "text", label: "How many minutes does it usually take to fall back asleep?" },
+      { id: "q22", num: "22", type: "check", label: "What do you do when you wake at night? (Check all that apply.)", options: ["Stay in bed and try to go back to sleep", "Get up and go to another room", "Check my phone or use a screen", "Eat or drink something", "Move to a different sleeping spot (couch, spare bed)"], hasOther: false },
+    ],
+  },
+  {
+    id: "daytime", title: "Section 5: How Sleep Affects Your Day", instruction: null,
+    questions: [
+      { id: "q23", num: "23", type: "rating", label: "How would you rate your overall sleep quality?", low: "Very poor", high: "Very good" },
+      { id: "q24", num: "24", type: "check", label: "After a bad night\u2019s sleep, which of the following get worse? (Check all that apply.)", options: ["Energy / fatigue", "Mood (irritability, sadness)", "Anxiety", "Concentration / thinking clearly", "Sensory sensitivity", "Social interactions", "Emotional regulation"], hasOther: false },
+      { id: "q25", num: "25", type: "radio", label: "Do you get stuck in a cycle where poor sleep makes the next day harder, which makes the next night\u2019s sleep worse?", options: ["Never", "Sometimes", "Often", "Always"] },
+    ],
+  },
+  {
+    id: "medical", title: "Section 6: Medical & Substance Factors", instruction: null,
+    questions: [
+      { id: "q26", num: "26", type: "check", label: "Do any of the following affect your sleep? (Check all that apply.)", options: ["Snoring, gasping, or pausing in breathing", "Restless legs or urge to move legs", "Chronic pain", "GI issues (reflux, IBS, nausea)", "Eczema, itching, or skin discomfort", "Allergies or nasal congestion", "Frequent urination at night", "None of the above"], hasOther: false },
+      { id: "q27", num: "27", type: "grid", label: "Caffeine use", cols: ["Answer"], rows: ["How many caffeinated drinks per day?", "Time of your last caffeine?"] },
+      { id: "q28", num: "28", type: "check", label: "Do you use any of the following to help with sleep? (Check all that apply.)", options: ["Alcohol", "Cannabis", "Over-the-counter sleep aids (e.g., Benadryl, ZzzQuil)", "Melatonin", "Herbal supplements (e.g., valerian, magnesium)", "None of the above"], hasOther: true },
+      { id: "q29", num: "29", type: "textarea", label: "Please list all current medications and supplements, including doses." },
+      { id: "q30", num: "30", type: "radio", label: "Have you tried melatonin?", options: ["Never tried it", "Yes \u2014 it helped with falling asleep and staying asleep", "Yes \u2014 it helped me fall asleep but not stay asleep", "Yes \u2014 it did not help"] },
+      { id: "q31", num: "31", type: "check", label: "Have you ever had a sleep study or tried therapy for sleep?", options: ["No, neither", "Yes \u2014 I had a sleep study", "Yes \u2014 I tried CBT for insomnia or another sleep therapy", "Yes \u2014 both"], hasOther: false },
+    ],
+  },
+  {
+    id: "mental_health", title: "Section 7: Mental Health & the Sleep\u2013Anxiety Connection",
+    instruction: "For many autistic adults, anxiety and physical arousal contribute to insomnia, and poor sleep makes anxiety worse. These questions help us understand this pattern for you.",
+    questions: [
+      { id: "q32", num: "32", type: "check", label: "Do you currently experience any of the following? (Check all that apply.)", options: ["Anxiety (worry, nervousness, panic)", "Depression (low mood, hopelessness)", "Both anxiety and depression", "Trauma-related symptoms", "None of the above"], hasOther: false },
+      { id: "q33", num: "33", type: "rating", label: "In the hour before bed, how \u201Cwound up\u201D does your BODY feel?", low: "Completely calm", high: "Extremely activated" },
+      { id: "q34", num: "34", type: "rating", label: "In the hour before bed, how active is your MIND?", low: "Completely quiet", high: "Extremely busy" },
+      { id: "q35", num: "35", type: "radio", label: "Do you experience \u201Ctired body but wired mind\u201D at bedtime?", options: ["Never", "Rarely", "Sometimes", "Often", "Every night"] },
+      { id: "q36", num: "36", type: "radio", label: "Is it hard to \u201Clet go\u201D of the day and stop processing events before sleep?", options: ["Never", "Rarely", "Sometimes", "Often", "Every night"] },
+      { id: "q37", num: "37", type: "check", label: "Are there topics your mind goes to at bedtime? (Check all that apply.)", options: ["Work or school", "Social interactions (replaying conversations)", "Things I need to do tomorrow", "Health concerns", "Finances or practical problems", "Relationships", "General restlessness, no specific topic"], hasOther: true },
+    ],
+  },
+  {
+    id: "preferences", title: "Section 8: Treatment Preferences", instruction: null,
+    questions: [
+      { id: "q38", num: "38", type: "textarea", label: "What would \u201Cgood enough\u201D sleep look like for you?" },
+      { id: "q39", num: "39", type: "radio", label: "How do you feel about medication for sleep?", options: ["Open to trying it", "Willing if non-medication options don\u2019t work first", "Prefer to avoid medication"] },
+      { id: "q40", num: "40", type: "check", label: "Do you have concerns about sleep medication? (Check all that apply.)", options: ["Becoming dependent or addicted", "Side effects", "Feeling groggy the next day", "Interactions with other medications", "No specific concerns"], hasOther: false },
+      { id: "q41", num: "41", type: "textarea", label: "Is there anything else about your sleep that would be helpful for us to know?" },
+    ],
+  },
+];
+
+function QLabel({ num, text }) {
+  return React.createElement("div", { className: "q-label" },
+    num ? React.createElement("span", { className: "num" }, num + ".") : null,
+    React.createElement("span", { className: "text" }, " " + text)
+  );
+}
+
+function TextQ({ q, value, onChange }) {
+  return React.createElement("div", { className: "card" },
+    React.createElement(QLabel, { num: q.num, text: q.label }),
+    q.placeholder ? React.createElement("div", { className: "placeholder-text" }, q.placeholder) : null,
+    React.createElement("input", {
+      className: "text-input", type: "text", value: value || "",
+      onChange: e => onChange(q.id, e.target.value),
+      placeholder: q.placeholder || "",
+    })
+  );
+}
+
+function TextAreaQ({ q, value, onChange }) {
+  return React.createElement("div", { className: "card" },
+    React.createElement(QLabel, { num: q.num, text: q.label }),
+    q.placeholder ? React.createElement("div", { className: "placeholder-text" }, q.placeholder) : null,
+    React.createElement("textarea", {
+      className: "text-input", value: value || "", rows: 3,
+      onChange: e => onChange(q.id, e.target.value),
+    })
+  );
+}
+
+function RadioQ({ q, value, onChange }) {
+  return React.createElement("div", { className: "card" },
+    React.createElement(QLabel, { num: q.num, text: q.label }),
+    React.createElement("div", { className: "radio-wrap" },
+      q.options.map(opt =>
+        React.createElement("button", {
+          key: opt,
+          className: "radio-btn" + (value === opt ? " selected" : ""),
+          onClick: () => onChange(q.id, opt),
+        }, opt)
+      )
+    )
+  );
+}
+
+function CheckQ({ q, value, onChange }) {
+  const items = (value && value.items) || [];
+  const otherVal = (value && value._other) || "";
+  const toggle = (opt) => {
+    const newItems = items.includes(opt) ? items.filter(v => v !== opt) : [...items, opt];
+    onChange(q.id, { ...value, items: newItems, _other: otherVal });
+  };
+  return React.createElement("div", { className: "card" },
+    React.createElement(QLabel, { num: q.num, text: q.label }),
+    React.createElement("div", { className: "check-list" },
+      q.options.map(opt =>
+        React.createElement("label", {
+          key: opt,
+          className: "check-item" + (items.includes(opt) ? " checked" : ""),
+        },
+          React.createElement("input", { type: "checkbox", checked: items.includes(opt), onChange: () => toggle(opt) }),
+          React.createElement("span", null, opt)
+        )
+      ),
+      q.hasOther ? React.createElement("div", { className: "other-wrap" },
+        React.createElement("span", null, "Other:"),
+        React.createElement("input", {
+          type: "text", value: otherVal,
+          onChange: e => onChange(q.id, { ...value, items, _other: e.target.value }),
+        })
+      ) : null
+    )
+  );
+}
+
+function RatingQ({ q, value, onChange }) {
+  return React.createElement("div", { className: "card" },
+    React.createElement(QLabel, { num: q.num, text: q.label }),
+    React.createElement("div", { className: "rating-wrap" },
+      React.createElement("span", { className: "rating-label left" }, q.low),
+      [0,1,2,3,4].map(n =>
+        React.createElement("button", {
+          key: n,
+          className: "rating-btn" + (value === n ? " selected" : ""),
+          onClick: () => onChange(q.id, n),
+        }, n)
+      ),
+      React.createElement("span", { className: "rating-label right" }, q.high)
+    )
+  );
+}
+
+function GridQ({ q, value, onChange }) {
+  const val = value || {};
+  return React.createElement("div", { className: "card" },
+    React.createElement(QLabel, { num: q.num, text: q.label }),
+    React.createElement("div", { style: { overflowX: "auto" } },
+      React.createElement("table", { className: "grid-table" },
+        React.createElement("thead", null,
+          React.createElement("tr", null,
+            React.createElement("th", null, ""),
+            q.cols.map(c => React.createElement("th", { key: c }, c))
+          )
+        ),
+        React.createElement("tbody", null,
+          q.rows.map(row =>
+            React.createElement("tr", { key: row },
+              React.createElement("td", null, row),
+              q.cols.map(col => {
+                const key = row + "__" + col;
+                return React.createElement("td", { key: col, style: { textAlign: "center" } },
+                  React.createElement("input", {
+                    type: "text", value: val[key] || "",
+                    onChange: e => onChange(q.id, { ...val, [key]: e.target.value }),
+                  })
+                );
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+}
+
+function renderQ(q, value, onChange) {
+  const map = { text: TextQ, textarea: TextAreaQ, radio: RadioQ, check: CheckQ, rating: RatingQ, grid: GridQ };
+  const Comp = map[q.type];
+  return Comp ? React.createElement(Comp, { key: q.id, q, value, onChange }) : null;
+}
+
+function generatePdfHtml(answers) {
+  let h = '<html><head><style>@page{size:letter;margin:.75in}body{font-family:Arial,sans-serif;font-size:11pt;color:#1a2332;line-height:1.5}h1{color:#2B547E;font-size:18pt;border-bottom:3px solid #2B547E;padding-bottom:6px}h2{color:#2B547E;font-size:13pt;margin-top:22px;border-bottom:1px solid #2B547E;padding-bottom:4px;text-transform:uppercase;letter-spacing:.5px}.q{margin-bottom:10px;page-break-inside:avoid}.ql{font-weight:bold}.qn{color:#2B547E;font-weight:bold}.a{color:#374151;padding:4px 8px;background:#f3f4f6;border-radius:4px;display:inline-block;margin-top:2px}.ab{color:#374151;padding:6px 10px;background:#f3f4f6;border-radius:4px;margin-top:4px}table.g{border-collapse:collapse;margin-top:4px}table.g th,table.g td{border:1px solid #ccc;padding:4px 10px;font-size:10pt}table.g th{background:#F5F8FB;color:#2B547E;font-weight:bold}.ft{margin-top:24px;padding-top:8px;border-top:2px solid #2B547E;font-size:9pt;color:#888;font-style:italic}</style></head><body>';
+  h += '<h1 style="text-align:center">Emory Autism Center</h1><p style="text-align:center;color:#666;font-size:10pt">Adult Sleep & Arousal Questionnaire</p>';
+  for (const sec of sections) {
+    h += '<h2>' + (sec.id === "info" ? "Patient Information" : sec.title) + '</h2>';
+    for (const q of sec.questions) {
+      const v = answers[q.id];
+      h += '<div class="q"><div class="ql">' + (q.num ? '<span class="qn">' + q.num + '.</span> ' : '') + q.label + '</div>';
+      if (q.type === "grid") {
+        h += '<table class="g"><tr><th></th>';
+        q.cols.forEach(c => h += '<th>' + c + '</th>');
+        h += '</tr>';
+        q.rows.forEach(r => {
+          h += '<tr><td style="font-weight:500">' + r + '</td>';
+          q.cols.forEach(c => h += '<td>' + ((v && v[r + '__' + c]) || '\u2014') + '</td>');
+          h += '</tr>';
+        });
+        h += '</table>';
+      } else if (q.type === "check") {
+        const items = (v && v.items) || [];
+        const other = (v && v._other) || "";
+        const all = [...items, ...(other ? ['Other: ' + other] : [])];
+        h += '<div class="ab">' + (all.length ? all.join('; ') : 'No selections') + '</div>';
+      } else if (q.type === "rating") {
+        h += '<div class="a">' + (v !== undefined && v !== null ? v + ' / 4 (' + q.low + ' \u2192 ' + q.high + ')' : '\u2014') + '</div>';
+      } else {
+        h += '<div class="a">' + (v || '\u2014') + '</div>';
+      }
+      h += '</div>';
+    }
+  }
+  h += '<div class="ft">Completed electronically. All data processed locally \u2014 no information transmitted or stored online. Emory Autism Center Adult Sleep & Arousal Questionnaire.</div></body></html>';
+  return h;
+}
+
+function App() {
+  const [answers, setAnswers] = useState({});
+  const [curSec, setCurSec] = useState(0);
+  const [generating, setGenerating] = useState(false);
+  const topRef = useRef(null);
+
+  const handleChange = (id, value) => setAnswers(prev => ({ ...prev, [id]: value }));
+
+  const sec = sections[curSec];
+  const total = sections.length;
+  const progress = ((curSec + 1) / total) * 100;
+  const answered = Object.keys(answers).length;
+
+  const goNext = () => { if (curSec < total - 1) { setCurSec(p => p + 1); window.scrollTo({ top: 0, behavior: "smooth" }); } };
+  const goPrev = () => { if (curSec > 0) { setCurSec(p => p - 1); window.scrollTo({ top: 0, behavior: "smooth" }); } };
+
+  const handlePdf = () => {
+    setGenerating(true);
+    setTimeout(() => {
+      const html = generatePdfHtml(answers);
+      const w = window.open("", "_blank");
+      if (w) { w.document.write(html); w.document.close(); setTimeout(() => { w.print(); setGenerating(false); }, 500); }
+      else { alert("Please allow pop-ups to generate the PDF."); setGenerating(false); }
+    }, 100);
+  };
+
+  return React.createElement("div", { className: "container" },
+    React.createElement("div", { ref: topRef }),
+    // Header
+    React.createElement("div", { className: "header" },
+      React.createElement("div", { className: "org" }, "Emory Autism Center"),
+      React.createElement("h1", null, "Adult Sleep & Arousal Questionnaire"),
+      React.createElement("p", { className: "desc" }, "This questionnaire helps us understand your sleep and what happens in your mind and body when you have difficulty sleeping."),
+      React.createElement("div", { className: "privacy-badge" }, "\uD83D\uDD12 Your data stays on your device \u2014 nothing is sent online")
+    ),
+    // Progress
+    React.createElement("div", { className: "progress-wrap" },
+      React.createElement("div", { className: "progress-labels" },
+        React.createElement("span", { className: "section-name" }, sec.title),
+        React.createElement("span", { className: "count" }, (curSec + 1) + " of " + total)
+      ),
+      React.createElement("div", { className: "progress-bar" },
+        React.createElement("div", { className: "progress-fill", style: { width: progress + "%" } })
+      )
+    ),
+    // Instruction
+    sec.instruction ? React.createElement("div", { className: "instruction" }, sec.instruction) : null,
+    // Questions
+    sec.questions.map(q => renderQ(q, answers[q.id], handleChange)),
+    // Nav
+    React.createElement("div", { className: "nav" },
+      React.createElement("button", { className: "nav-btn back", onClick: goPrev, disabled: curSec === 0 }, "\u2190 Back"),
+      React.createElement("span", { className: "count" }, answered + " answered"),
+      curSec < total - 1
+        ? React.createElement("button", { className: "nav-btn next", onClick: goNext }, "Next \u2192")
+        : React.createElement("button", { className: "nav-btn generate", onClick: handlePdf, disabled: generating }, generating ? "Generating\u2026" : "Generate PDF \u2192")
+    ),
+    // Final note
+    curSec === total - 1 ? React.createElement("div", { className: "final-note" },
+      "When you\u2019re done, click ", React.createElement("strong", null, "Generate PDF"), " to create a printable version. You can print it or save it as a PDF to bring to your appointment."
+    ) : null
+  );
+}
+
+ReactDOM.render(React.createElement(App), document.getElementById("app"));
+</script>
+</body>
+</html>
